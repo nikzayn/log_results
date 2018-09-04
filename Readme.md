@@ -44,6 +44,7 @@ Loading will take some time!!!
 
 ## Expected Output: 
 vagrant@vagrant:/vagrant/log_results$ python logresults.py
+
 Fetching Results from the Database...
 
 1. What are the most popular three articles of all time?
