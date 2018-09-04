@@ -76,7 +76,7 @@ def print_third_query_results(query):
         print ('\t' + str(fetch[0]) + ' - ' + str(fetch[1]) + ' %')
 
 #7. Print out the results from the defined queries:
-print('Fetching Results from the Database...\n')
+print('Fetching Results from the Database...')
 print_first_query_results(first_query)
 print_second_query_results(second_query)
 print_third_query_results(third_query)

@@ -43,9 +43,8 @@ These files configure the virtual machine and install all the tools needed to ru
 Loading will take some time!!! 
 
 ## Expected Output: 
-vagrant@vagrant:/vagrant/forum$ python logresults.py
+vagrant@vagrant:/vagrant/log_results$ python logresults.py
 Fetching Results from the Database...
-
 
 1. What are the most popular three articles of all time?
 
@@ -62,4 +61,5 @@ Fetching Results from the Database...
 3. On which days did more than 1% of requests lead to errors?
 
         2016-07-17 - 2.000 %
+
 
