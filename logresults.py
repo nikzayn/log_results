@@ -4,125 +4,79 @@
 #Importing the postegre library
 import psycopg2
 
-
+#Connect the database to news
 DBNAME = 'news'
 
 # Define the postgre query which connects, pass and returns
-def run_query(query):
+def start_query(query):
     """Connects to the database, runs the query passed to it,
     and returns the results"""
-
     db = psycopg2.connect('dbname=' + DBNAME)
     c = db.cursor()
     c.execute(query)
-    rows = c.fetchall()
+    logs = c.fetchall()
     db.close()
-    return rows
+    return logs
 
-#1. Define the top 3 articles
-def fetch_top_articles():
-    """Returns top 3 most read articles"""
-
-    #1.1 Building the Query
-
-    query = \
-        """
-        SELECT articles.title, COUNT(*) AS num
-        FROM articles
-        JOIN log
-        ON log.path LIKE concat('/article/%', articles.slug)
-        GROUP BY articles.title
-        ORDER BY num DESC
+#1. Query for - "Top 3 articles of all time"
+first_query = """
+        SELECT title, COUNT(*) AS num
+        FROM articles,log
+        WHERE log.path LIKE concat('/article/%', articles.slug)
+        GROUP by articles.title
+        ORDER by num DESC
         LIMIT 3;
     """
 
-    #1.2 Running the Query
-
-    result = run_query(query)
-
-    #1.3 Display the Results
-
-    print '\nTOP 3 ARTICLES:'
-    count = 1
-    for i in result:
-        number = '(' + str(count) + ') "'
-        title = i[0]
-        views = '" with ' + str(i[1]) + ' views'
-        print number + title + views
-        count += 1
-
-#2. Define the top 3 authors
-def fetch_top_authors():
-    """returns top 3 most popular authors"""
-
-    #2.1 Building the Query
-
-    query = \
-        """
+#2. Query for - "Top 3 most popular authors of all time"
+second_query = """
         SELECT authors.name, COUNT(*) AS num
-        FROM authors
-        JOIN articles
+        FROM authors JOIN articles
         ON authors.id = articles.author
-        JOIN log
-        ON log.path like concat('/article/%', articles.slug)
-        GROUP BY authors.name
-        ORDER BY num DESC
+        JOIN log ON log.path LIKE concat('/article/%', articles.slug)
+        GROUP by authors.name
+        ORDER by num DESC
         LIMIT 3;
     """
 
-    #2.2 Running Query
-
-    result = run_query(query)
-
-    #2.3 Display the Results
-
-    print '\nTOP 3 AUTHORS:'
-    count = 1
-    for i in result:
-        print '(' + str(count) + ') ' + i[0] + ' with ' + str(i[1]) \
-            + ' views'
-        count += 1
-
-#3. Define the errors recieved through days
-def fetch_day_errors():
-    """returns days with more than 1.5% errors"""
-
-    #3.1 Building the Query
-
-    query = \
-        """
-        SELECT total.day,
-          ROUND(((errors.error_requests*1.0) / total.requests), 3) AS percent
-        FROM (
-          SELECT date_trunc('day', time) "day", count(*) AS error_requests
-          FROM log
-          WHERE status LIKE '404%'
-          GROUP BY day
-        ) AS errors
-        JOIN (
-          SELECT date_trunc('day', time) "day", count(*) AS requests
-          FROM log
-          GROUP BY day
-          ) AS total
-        ON total.day = errors.day
-        WHERE (ROUND(((errors.error_requests*1.0) / total.requests), 3) > 0.01)
-        ORDER BY percent DESC;
+#3. Query for - "Days on which % of error are more"
+third_query = """
+        SELECT * FROM(SELECT date(time),
+        round(100*sum(case log.status
+        when '200 OK' then 0 else 1 end)/
+        COUNT(log.status),3)
+        AS error FROM log
+        GROUP by date(time)
+        ORDER by error DESC) as subq
+        WHERE error > 1; 
     """
 
-    #3.2 Running the Query
+#4. Define the first query for finding out the top 3 articles. 
+def print_first_query_results(query):
+    output = start_query(query)
+    print('\n1. What are the most popular three articles of all time?\n')
+    for fetch in output:
+        """Output of the results from the database of the string of articles"""
+        print ('\t' + str(fetch[0]) + ' - ' + str(fetch[1]) + ' views')
 
-    result = run_query(query)
+#5. Define the second query for finding out the top 3 authors of all time.
+def print_second_query_results(query):
+    output = start_query(query)
+    print('\n2. Who are the most popular article authors of all time?\n')
+    for fetch in output:
+        """Output of the results from the database of the string of authors"""
+        print ('\t' + str(fetch[0]) + ' - ' + str(fetch[1]) + ' views')
 
-    #3.3 Display the Results
+#6. Define the third query for finding out days in which error leads.
+def print_third_query_results(query):
+    output = start_query(query)
+    print('\n3. On which days did more than 1% of requests lead to errors?\n')
+    for fetch in output:
+        """Output of the results from the database of the string of errors"""
+        print ('\t' + str(fetch[0]) + ' - ' + str(fetch[1]) + ' %')
 
-    print '\nDAYS WITH MORE THAN 1.5% ERRORS:'
-    for i in result:
-        date = i[0].strftime('%B %d, %Y')
-        errors = str(round(i[1] * 100, 1)) + '%' + ' errors'
-        print date + ' -- ' + errors
-
-
-print 'Fetching Results...\n'
-fetch_top_articles()
-fetch_top_authors()
-fetch_day_errors()
+#7. Print out the results from the defined queries:
+print('Fetching Results from the Database...\n')
+print_first_query_results(first_query)
+print_second_query_results(second_query)
+print_third_query_results(third_query)
