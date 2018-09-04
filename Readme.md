@@ -1,9 +1,7 @@
 # Log Analysis Project
-This is a project for Udacity's [Full Stack Web Developer Nanodegree](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd004)
+Udacity's Nanodegree Last Project
 ## Project Description:
-Your task is to create a reporting tool that prints out reports (in plain text) 
-based on the data in the database. This reporting tool is a Python program 
-using the psycopg2 module to connect to the database.
+Your task is to create a reporting tool that prints out reports (in plain text) based on the data in the database. This reporting tool is a Python program using the psycopg2 module to connect to the database.
 ### Questions to Answer:
 1. **What are the most popular three articles of all time?** Which articles have been 
 accessed the most? Present this information as a sorted list with the most popular 
@@ -15,9 +13,8 @@ Present this as a sorted list with the most popular author at the top.
 includes a column status that indicates the HTTP status code that the news site sent 
 to the user's browser. 
 
-## This Project Requires a Bit of Setup:
-This project is run in a virutal machine created using Vagrant so there are a few steps
-to get set up:
+## Project Setup:
+This project is running in a virutal machine created using Vagrant so there are a few steps to get set up:
 #### Installing the dependencies and setting up the files:
 1. Install [Vagrant](https://www.vagrantup.com/)
 1. Install [VirtualBox](https://www.virtualbox.org/)
@@ -36,8 +33,6 @@ These files configure the virtual machine and install all the tools needed to ru
 1. cd into the correct project directory: ``` cd /vagrant/log_results ```
 #### Load the data into the database:
 1. Load the data using the following command: ``` psql -d news -f newsdata.sql ```
-1. *Note:* Checkout Udacity's [FAQ](https://classroom.udacity.com/nanodegrees/nd004-intr1/parts/51d7c083-901a-40d2-a9d1-f486792ca277/modules/94c39513-066c-4413-b2d0-d4e5fba3791f/lessons/e313d1d3-46bd-4773-ba38-71f454b991cc/concepts/b2ff9cba-210e-463e-9321-2605f65491a9) 
-page if you are running into any errors here.
 
 
 ## Run The Project Already!
@@ -45,7 +40,7 @@ page if you are running into any errors here.
 1. If you aren't already, cd into the correct project directory: ``` cd /vagrant/log_results ```
 1. Run ``` python logresults.py ```
 
-Generating this information will take several seconds, but will now start loading. 
+Loading will take some time!!! 
 
 ## Expected Output: 
 vagrant@vagrant:/vagrant/forum$ python logresults.py
