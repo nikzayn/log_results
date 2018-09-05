@@ -25,7 +25,7 @@ These files configure the virtual machine and install all the tools needed to ru
 1. Unzip the data to get the newsdata.sql file.
 1. Put the newsdata.sql file into the vagrant directory
 1. Download this project: [log results](https://github.com/nikzayn/log_results)
-1. Upzip as needed and copy all files into the vagrant directory into a folder called log_analysis
+1. Upzip as needed and copy all files into the vagrant directory into a folder called log_results
 #### How to run the program in virtual machine:
 1. Open Terminal and navigate to the project folders we setup above.
 1. cd into the vagrant directory
@@ -45,6 +45,7 @@ Loading will take some time!!!
 
 ## Expected Output: 
 vagrant@vagrant:/vagrant/log_results$ python logresults.py
+
 Fetching Results from the Database...
 
 1. What are the most popular three articles of all time?
