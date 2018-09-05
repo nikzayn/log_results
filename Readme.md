@@ -1,7 +1,8 @@
 # Log Analysis Project
 Udacity's Nanodegree Last Project
 ## Project Description:
-Your task is to create a reporting tool that prints out reports (in plain text) based on the data in the database. This reporting tool is a Python program using the psycopg2 module to connect to the database.
+Your task is to create a reporting tool which fetches the
+data from the sql which connects to the psycopg2 module.
 ### Questions to Answer:
 1. **What are the most popular three articles of all time?** Which articles have been 
 accessed the most? Present this information as a sorted list with the most popular 
@@ -60,6 +61,7 @@ Fetching Results from the Database...
 
 3. On which days did more than 1% of requests lead to errors?
 
-        2016-07-17 - 2.000 %
+        2016-07-17 - 2.263 %
+
 
 

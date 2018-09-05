@@ -22,7 +22,7 @@ def start_query(query):
 first_query = """
         SELECT title, COUNT(*) AS num
         FROM articles,log
-        WHERE log.path LIKE concat('/article/%', articles.slug)
+        WHERE log.path = CONCAT('/article/', articles.slug)
         GROUP by articles.title
         ORDER by num DESC
         LIMIT 3;
@@ -33,7 +33,7 @@ second_query = """
         SELECT authors.name, COUNT(*) AS num
         FROM authors JOIN articles
         ON authors.id = articles.author
-        JOIN log ON log.path LIKE concat('/article/%', articles.slug)
+        JOIN log ON log.path = CONCAT('/article/', articles.slug)
         GROUP by authors.name
         ORDER by num DESC
         LIMIT 3;
@@ -42,7 +42,7 @@ second_query = """
 #3. Query for - "Days on which % of error are more"
 third_query = """
         SELECT * FROM(SELECT date(time),
-        round(100*sum(case log.status
+        round(100.0*sum(case log.status
         when '200 OK' then 0 else 1 end)/
         COUNT(log.status),3)
         AS error FROM log
@@ -76,7 +76,8 @@ def print_third_query_results(query):
         print ('\t' + str(fetch[0]) + ' - ' + str(fetch[1]) + ' %')
 
 #7. Print out the results from the defined queries:
-print('Fetching Results from the Database...')
-print_first_query_results(first_query)
-print_second_query_results(second_query)
-print_third_query_results(third_query)
+if __name__ == '__main__':
+    print('Fetching Results from the Database...')
+    print_first_query_results(first_query)
+    print_second_query_results(second_query)
+    print_third_query_results(third_query)

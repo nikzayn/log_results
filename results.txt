@@ -15,4 +15,5 @@ Fetching Results from the Database...
 
 3. On which days did more than 1% of requests lead to errors?
 
-        2016-07-17 - 2.000 %
+        2016-07-17 - 2.263 %
+
